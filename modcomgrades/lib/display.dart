@@ -76,11 +76,14 @@ class ResultsTable extends StatelessWidget {
   final Map<String, int> results;
   @override
   Widget build(BuildContext context) {
-    return DataTable(columns: const [
-      DataColumn(label: Text('Subject')),
-      DataColumn(label: Text('Marks')),
-      DataColumn(label: Text('Complete'))
-    ], rows: generated);
+    return DataTable(
+        headingRowColor: WidgetStateProperty.all(Colors.orangeAccent),
+        columns: const [
+          DataColumn(label: Text('Subject')),
+          DataColumn(label: Text('Marks')),
+          DataColumn(label: Text('Complete'))
+        ],
+        rows: generated);
   }
 
   late List<DataRow> res = [
@@ -90,13 +93,16 @@ class ResultsTable extends StatelessWidget {
     ]),
   ];
   late List<DataRow> generated = List.generate(results.length, (index) {
-    return DataRow(cells: [
-      DataCell(Text(results.entries.toList()[index].key)),
-      DataCell(Text(results.entries.toList()[index].value.toString())),
-      DataCell(Checkbox(
-        value: results.entries.toList()[index].value < 70,
-        onChanged: (bool? value) {},
-      ))
-    ]);
+    return DataRow(
+        color: WidgetStateProperty.all(
+            index.isEven ? Colors.black26 : Colors.white),
+        cells: [
+          DataCell(Text(results.entries.toList()[index].key)),
+          DataCell(Text(results.entries.toList()[index].value.toString())),
+          DataCell(Checkbox(
+            value: results.entries.toList()[index].value > 70,
+            onChanged: (bool? value) {},
+          ))
+        ]);
   });
 }
